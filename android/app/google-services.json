@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "686586767967",
+    "firebase_url": "https://assignmnetapptechnilfiy-default-rtdb.firebaseio.com",
+    "project_id": "assignmnetapptechnilfiy",
+    "storage_bucket": "assignmnetapptechnilfiy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686586767967:android:35c12ef2d1738d5bf349ea",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_assignmnettechnilify"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-DgbyyHUnqnLtnKKUkFQ7BHuC3YcmWTA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
