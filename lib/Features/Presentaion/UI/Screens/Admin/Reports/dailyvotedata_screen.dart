@@ -106,7 +106,7 @@ class _DailyVoteDataScreenState extends State<DailyVoteDataScreen> {
                       return votes.totalVotes;
                     },
                     dataLabelSettings: const DataLabelSettings(isVisible: true),
-                    color: Colors.redAccent, // Bar color
+                    color: Colors.yellowAccent, // Bar color
                   ),
                 ],
               ),

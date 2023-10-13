@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_assignmnettechnilify/Features/Domain/UseCases/VotesUseCases/readvote_usecase.dart';
-import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/StateMangemnet/ManageCharactersAndUsersCubits/readuser_cubit.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/StateMangemnet/VotesCubits/readvotes_cubit.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/StateMangemnet/blocstates.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/UI/Screens/Admin/Reports/charcatervotedata_screen.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/UI/Screens/Admin/Reports/dailyvotedata_screen.dart';
+import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/UI/Screens/Admin/Reports/databydate_screen.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/UI/Screens/Admin/Reports/popularirydata_screen.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/UI/Widgets/Global/customcircularbar.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/UI/Widgets/Global/drawer.dart';
@@ -14,15 +13,16 @@ class AdminHomeScreen extends StatefulWidget {
   const AdminHomeScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _AdminHomeScreenState createState() => _AdminHomeScreenState();
 }
 
 class _AdminHomeScreenState extends State<AdminHomeScreen> {
   List<Widget> list = [
-    const DailyVoteDataScreen(),
     const PopularityChartsScreen(),
-    const CharacterVoteDataScreen()
-    // Add more widgets for other tabs as needed
+    const DataByDateScreen(),
+    const DailyVoteDataScreen(),
+    const ChracterVoteDataScreen()
   ];
 
   int _selectedIndex = 0;
@@ -72,26 +72,37 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
           ],
         );
       }), // Show the content based on the selected index
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
-        selectedItemColor: Colors.red,
-        unselectedItemColor: Colors.white,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.check_circle),
-            label: 'Votes',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.star),
-            label: 'Popularity',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            label: 'By Character',
-          ),
-        ],
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor: Colors.black, // Set the background color to black
+        ),
+        child: BottomNavigationBar(
+          showUnselectedLabels: true,
+          showSelectedLabels: true,
+          backgroundColor: Colors.black,
+          selectedItemColor: Colors.red,
+          unselectedItemColor: Colors.white,
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.star),
+              label: 'Popularity',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today_outlined),
+              label: 'By Date',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.check_circle),
+              label: 'Grouped Daily',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.people),
+              label: 'By Character',
+            ),
+          ],
+        ),
       ),
     );
   }

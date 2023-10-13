@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/StateMangemnet/AuthCubits/changepassword_cubit.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/StateMangemnet/AuthCubits/signin_cubit.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/StateMangemnet/AuthCubits/signout_cubit.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/St
 import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/StateMangemnet/VotesCubits/readvotes_cubit.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/StateMangemnet/VotesCubits/writevotes_cubit.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/UI/Screens/Admin/Reports/charcatervotedata_screen.dart';
+import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/UI/Screens/Admin/Reports/popularirydata_screen.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/UI/Screens/splash_screen.dart';
 import 'package:flutter_application_assignmnettechnilify/firebase_options.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +19,9 @@ import 'dependency_container.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

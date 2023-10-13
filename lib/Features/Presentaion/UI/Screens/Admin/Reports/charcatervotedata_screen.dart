@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_assignmnettechnilify/Features/Domain/Entities/LocalEntities/vote_model_chracter.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Domain/Entities/VotingEntity/character_daily_votes_entity.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Domain/Entities/VotingEntity/daily_votes_entity.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Domain/Entities/character_entity.dart';
@@ -7,73 +8,33 @@ import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/St
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class CharacterVoteDataScreen extends StatefulWidget {
-  const CharacterVoteDataScreen({super.key});
+class ChracterVoteDataScreen extends StatefulWidget {
+  const ChracterVoteDataScreen({super.key});
 
   @override
-  State<CharacterVoteDataScreen> createState() =>
-      _CharacterVoteDataScreenState();
+  State<ChracterVoteDataScreen> createState() => _ChracterVoteDataScreenState();
 }
 
-class _CharacterVoteDataScreenState extends State<CharacterVoteDataScreen> {
-  List<VoteModelChracter> chraterDataList = [];
-  List<VoteModelChracter> topFive = [];
-  String text = "Top 5 All Time";
+class _ChracterVoteDataScreenState extends State<ChracterVoteDataScreen> {
+  List<DailyVotesEntity> dailyvoteList = [];
+  List<CharacterEntity> chracterEntityList = [];
+  List<VoteModelChracter> voteModelChratcerdataList = [];
+  String selectedChracterTitle = "";
+  String selectedId = "";
 
   @override
   void initState() {
-    List<DailyVotesEntity> list =
-        BlocProvider.of<ReadVotesCubit>(context).readDailyVoteListLocall();
-    var readChracters = BlocProvider.of<ReadCharactersCubit>(context)
+    chracterEntityList = BlocProvider.of<ReadCharactersCubit>(context)
         .readCharactersListLocall();
-    readChracters.forEach((chraters) {
-      chraterDataList.add(VoteModelChracter(
-          characterEntity: chraters,
-          characterDailyVotesEntity: CharacterDailyVotesEntity(
-              afternoonVotes: 0,
-              characterId: chraters.uid,
-              morningVotes: 0,
-              characterTotalDailyVotes: 0,
-              nightVotes: 0)));
-    });
 
-    chraterDataList.forEach((voteModelChracter) {
-      list.forEach((dailyVotesEntity) {
-        dailyVotesEntity.charactersDailyVotesList!.forEach((element) {
-          if (element.characterId == voteModelChracter.characterEntity.uid) {
-            voteModelChracter.characterDailyVotesEntity.afternoonVotes =
-                (voteModelChracter.characterDailyVotesEntity.afternoonVotes ??
-                        0) +
-                    (element.afternoonVotes ?? 0);
+    selectedChracterTitle = chracterEntityList[0].name as String;
+    selectedId = chracterEntityList[0].uid as String;
 
-            voteModelChracter.characterDailyVotesEntity.nightVotes =
-                (voteModelChracter.characterDailyVotesEntity.nightVotes ?? 0) +
-                    (element.nightVotes ?? 0);
+    dailyvoteList =
+        BlocProvider.of<ReadVotesCubit>(context).readDailyVoteListLocall();
 
-            voteModelChracter.characterDailyVotesEntity.morningVotes =
-                (voteModelChracter.characterDailyVotesEntity.morningVotes ??
-                        0) +
-                    (element.morningVotes ?? 0);
+    filterList();
 
-            voteModelChracter.characterDailyVotesEntity
-                .characterTotalDailyVotes = (voteModelChracter
-                        .characterDailyVotesEntity.characterTotalDailyVotes ??
-                    0) +
-                (element.characterTotalDailyVotes ?? 0);
-          }
-        });
-      });
-    });
-
-    chraterDataList.sort((a, b) {
-      final aVotes = a.characterDailyVotesEntity.characterTotalDailyVotes ?? 0;
-      final bVotes = b.characterDailyVotesEntity.characterTotalDailyVotes ?? 0;
-      return bVotes - aVotes;
-    });
-
-    for (int i = 0; i < 5; i++) {
-      topFive.add(chraterDataList[i]);
-    }
     super.initState();
   }
 
@@ -81,117 +42,59 @@ class _CharacterVoteDataScreenState extends State<CharacterVoteDataScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: DropdownButton<String>(
-                value: selectedValue,
-                items: <String>['All Time', 'Morning', 'AfterNoon', 'Night']
-                    .map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(
-                      value,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                      ),
-                    ),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    selectedValue = newValue ?? 'All Time';
-                    if (selectedValue == 'All Time') {
-                      chraterDataList.sort((a, b) {
-                        final aVotes = a.characterDailyVotesEntity
-                                .characterTotalDailyVotes ??
-                            0;
-                        final bVotes = b.characterDailyVotesEntity
-                                .characterTotalDailyVotes ??
-                            0;
-                        return bVotes - aVotes;
-                      });
-
-                      for (int i = 0; i < 5; i++) {
-                        topFive.add(chraterDataList[i]);
-                      }
-                    } else if (selectedValue == 'Morning') {
-                      chraterDataList.sort((a, b) {
-                        final aVotes =
-                            a.characterDailyVotesEntity.morningVotes ?? 0;
-                        final bVotes =
-                            b.characterDailyVotesEntity.morningVotes ?? 0;
-                        return bVotes - aVotes;
-                      });
-
-                      for (int i = 0; i < 5; i++) {
-                        topFive.add(chraterDataList[i]);
-                      }
-                    } else if (selectedValue == 'AfterNoon') {
-                      chraterDataList.sort((a, b) {
-                        final aVotes =
-                            a.characterDailyVotesEntity.afternoonVotes ?? 0;
-                        final bVotes =
-                            b.characterDailyVotesEntity.afternoonVotes ?? 0;
-                        return bVotes - aVotes;
-                      });
-
-                      for (int i = 0; i < 5; i++) {
-                        topFive.add(chraterDataList[i]);
-                      }
-                    } else {
-                      chraterDataList.sort((a, b) {
-                        final aVotes =
-                            a.characterDailyVotesEntity.nightVotes ?? 0;
-                        final bVotes =
-                            b.characterDailyVotesEntity.nightVotes ?? 0;
-                        return bVotes - aVotes;
-                      });
-
-                      for (int i = 0; i < 5; i++) {
-                        topFive.add(chraterDataList[i]);
-                      }
-                    }
-                  });
-                },
-              ),
-            ),
+                width: size.width,
+                height: size.width / 5,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: chracterEntityList.length,
+                    itemBuilder: (ctx, index) {
+                      return InkWell(
+                        onTap: () {
+                          selectedId = chracterEntityList[index].uid as String;
+                          setState(() {
+                            selectedChracterTitle =
+                                chracterEntityList[index].name as String;
+                            filterList();
+                          });
+                        },
+                        child: Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: size.width * .04),
+                          child: CircleAvatar(
+                            radius: 30,
+                            backgroundImage: NetworkImage(
+                                chracterEntityList[index].imageUrl as String),
+                          ),
+                        ),
+                      );
+                    })),
             const SizedBox(
               height: 10,
             ),
             Expanded(
               child: SfCartesianChart(
                 primaryXAxis: CategoryAxis(),
-                title: ChartTitle(text: 'Top 5 $selectedValue'),
+                title: ChartTitle(text: selectedChracterTitle),
                 legend: const Legend(isVisible: false),
                 series: <BarSeries<VoteModelChracter, String>>[
                   BarSeries<VoteModelChracter, String>(
-                    dataSource: topFive,
-                    xValueMapper: (VoteModelChracter votes, _) =>
-                        votes.characterEntity.name,
+                    dataSource: voteModelChratcerdataList,
+                    xValueMapper: (VoteModelChracter votes, _) => votes.date,
                     yValueMapper: (VoteModelChracter votes, _) {
-                      if (selectedValue == "All Time") {
-                        return votes
-                            .characterDailyVotesEntity.characterTotalDailyVotes;
-                      } else if (selectedValue == "AfterNoon") {
-                        return votes.characterDailyVotesEntity.afternoonVotes;
-                      } else if (selectedValue == "Morning") {
-                        return votes.characterDailyVotesEntity.morningVotes;
-                      } else {
-                        return votes.characterDailyVotesEntity.nightVotes;
-                      }
+                      return votes
+                          .characterDailyVotesEntity.characterTotalDailyVotes;
                     },
                     dataLabelSettings: const DataLabelSettings(isVisible: true),
-                    color: Colors.redAccent, // Bar color
+                    color: Colors.greenAccent, // Bar color
                   ),
                 ],
               ),
@@ -201,11 +104,20 @@ class _CharacterVoteDataScreenState extends State<CharacterVoteDataScreen> {
       ),
     );
   }
-}
 
-class VoteModelChracter {
-  CharacterDailyVotesEntity characterDailyVotesEntity;
-  CharacterEntity characterEntity;
-  VoteModelChracter(
-      {required this.characterDailyVotesEntity, required this.characterEntity});
+  void filterList() {
+    voteModelChratcerdataList.clear();
+
+    dailyvoteList.forEach((daily) {
+      for (int i = 0; i < daily.charactersDailyVotesList!.length; i++) {
+        if (daily.charactersDailyVotesList![i].characterId == selectedId) {
+          voteModelChratcerdataList.add(VoteModelChracter(
+              characterDailyVotesEntity: daily.charactersDailyVotesList![i],
+              characterEntity: chracterEntityList
+                  .firstWhere((element) => element.uid == selectedId),
+              date: daily.date));
+        }
+      }
+    });
+  }
 }

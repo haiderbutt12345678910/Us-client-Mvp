@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_assignmnettechnilify/Features/Domain/Entities/LocalEntities/vote_model_chracter.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Domain/Entities/VotingEntity/character_daily_votes_entity.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Domain/Entities/VotingEntity/daily_votes_entity.dart';
-import 'package:flutter_application_assignmnettechnilify/Features/Domain/Entities/character_entity.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/StateMangemnet/ManageCharactersAndUsersCubits/readcharacters_cubit.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/StateMangemnet/VotesCubits/readvotes_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -200,11 +200,4 @@ class _PopularityChartsScreenState extends State<PopularityChartsScreen> {
       ),
     );
   }
-}
-
-class VoteModelChracter {
-  CharacterDailyVotesEntity characterDailyVotesEntity;
-  CharacterEntity characterEntity;
-  VoteModelChracter(
-      {required this.characterDailyVotesEntity, required this.characterEntity});
 }
