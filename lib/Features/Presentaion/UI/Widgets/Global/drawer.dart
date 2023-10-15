@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/StateMangemnet/AuthCubits/changepassword_cubit.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/StateMangemnet/AuthCubits/signout_cubit.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/UI/Screens/Admin/MangeChracterAndUsers/ManageChracters/allchracters_Screen.dart';
 import 'package:flutter_application_assignmnettechnilify/Features/Presentaion/UI/Screens/Admin/MangeChracterAndUsers/ManageUsers/allusers_screen.dart';
@@ -35,7 +34,7 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(
               Icons.person,
-              color: Colors.amber,
+              color: Colors.black,
             ),
             title: const Text('Manage Users',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
@@ -50,7 +49,7 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(
               Icons.emoji_emotions,
-              color: Colors.amber,
+              color: Colors.black,
             ),
             title: const Text(
               'Manage Chracters',
@@ -69,7 +68,7 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(
               Icons.password,
-              color: Colors.amber,
+              color: Colors.black,
             ),
             title: const Text('Change Password',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
@@ -85,7 +84,7 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(
               Icons.exit_to_app,
-              color: Colors.amber,
+              color: Colors.black,
             ),
             title: const Text('SignOut',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),

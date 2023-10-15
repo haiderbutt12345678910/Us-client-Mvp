@@ -18,6 +18,8 @@ class DataByDateScreen extends StatefulWidget {
 class _DataByDateScreenState extends State<DataByDateScreen> {
   List<DailyVotesEntity> dailyvoteList = [];
   List<VoteModelChracter> byDateDataList = [];
+  late DateTime fromDate;
+  late DateTime toDate;
 
   DateTime selectedDate = DateTime.now();
   final DateFormat dateFormat =
@@ -27,6 +29,11 @@ class _DataByDateScreenState extends State<DataByDateScreen> {
   void initState() {
     dailyvoteList =
         BlocProvider.of<ReadVotesCubit>(context).readDailyVoteListLocall();
+
+    fromDate = dateFormat
+        .parse(dailyvoteList[dailyvoteList.length - 1].date as String);
+    toDate = dateFormat.parse(dailyvoteList[0].date as String);
+
     filterList();
 
     super.initState();
