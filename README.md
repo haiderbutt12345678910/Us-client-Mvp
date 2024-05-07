@@ -1,16 +1,12 @@
-# flutter_application_assignmnettechnilify
+# flutter_application_Mvptechnilify
 
-A new Flutter project.
 
-## Getting Started
+Disney Character Voting App
 
-This project is a starting point for a Flutter application.
+This Flutter-based application is custom-built for our US client, allowing users to vote for their favorite Disney characters and providing various statistics about character popularity. The app integrates Firebase for backend services and includes an in-app dashboard for administrators to manage character data efficiently.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Features
+Voting System: Users can vote for their favorite Disney characters.
+Character Statistics: Provides detailed statistics on character popularity, including charts illustrating different metrics.
+In-App Dashboard: Administrators can seamlessly upload new characters to the database using the intuitive in-app dashboard.
+Firebase Integration: Utilizes Firebase for seamless backend services such as authentication, data storage, and real-time database updates.
